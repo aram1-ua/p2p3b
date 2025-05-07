@@ -1,4 +1,4 @@
-// DNI 12345678X GARCIA GARCIA, JUAN MANUEL
+// Y5624889T ANJA RAPHAELA ALUM MILLARES
 #include "Coordinate.h"
 
 Coordinate::Coordinate() : row(-1), column(-1) {}
@@ -14,11 +14,11 @@ int Coordinate::getColumn() const {
 }
 
 void Coordinate::setRow(int r) {
-    row = r;
+    this->row = row;
 }
 
 void Coordinate::setColumn(int c) {
-    column = c;
+    this->column = column;
 }
 
 bool Coordinate::isValid() const {

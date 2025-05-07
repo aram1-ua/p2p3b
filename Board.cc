@@ -1,86 +1,44 @@
-// DNI 12345678X GARCIA GARCIA, JUAN MANUEL
+// Y5624889T ANJA RAPHAELA ALUM MILLARES
 #include "Board.h"
-#include <iostream>
+#include <stdexcept>
 
-Board::Board() {
-    reset();
+Board::Board(int size) : size(size) {
+    if (size <= 0) throw std::invalid_argument("Wrong size");
+
+    board.resize(size, std::vector<Fighter*>(size, nullptr));
 }
 
-void Board::reset() {
-    for (int i = 0; i < NUM_FIGHTERS; i++)
-        fighters[i].reset();
-    for (int i = 0; i < NUM_AIRCRAFT_CARRIERS; i++)
-        aircraftCarriers[i].reset();
+Fighter* Board::getFighter(Coordinate c) const {
+    if (!inside(c)) return nullptr;
+    return board[c.getRow()][c.getCol()];
 }
 
-int Board::getFighterIndex(int id) const {
-    for (int i = 0; i < NUM_FIGHTERS; i++) {
-        if (fighters[i].getId() == id)
-            return i;
+bool Board::inside(Coordinate c) const {
+    return c.getRow() >= 0 && c.getRow() < size && c.getCol() >= 0 && c.getCol() < size;
+}
+
+int Board::launch(Coordinate c, Fighter* f) {
+    if (!f || !inside(c) || f->getPosition().isValid()) return 0;
+
+    Fighter* current = board[c.getRow()][c.getCol()];
+    if (current == nullptr) {
+        board[c.getRow()][c.getCol()] = f;
+        f->setPosition(c);
+        return 0;
     }
-    return -1;
-}
 
-int Board::getAircraftCarrierIndex(const Coordinate& c) const {
-    for (int i = 0; i < NUM_AIRCRAFT_CARRIERS; i++) {
-        if (aircraftCarriers[i].getPosition().getRow() == c.getRow() &&
-            aircraftCarriers[i].getPosition().getColumn() == c.getColumn())
-            return i;
+    if (current->getAircraftCarrier() == f->getAircraftCarrier()) return 0;
+
+    // Enemy present, simulate fight
+    int result = f->fight(current);
+    if (result == 1) {
+        // f won, replace enemy
+        current->resetPosition();
+        board[c.getRow()][c.getCol()] = f;
+        f->setPosition(c);
+    } else if (result == -1) {
+        // enemy won, f remains unplaced
+        // nothing to change here
     }
-    return -1;
-}
-
-bool Board::addFighter(const Fighter& f) {
-    for (int i = 0; i < NUM_FIGHTERS; i++) {
-        if (fighters[i].getId() == -1) {
-            fighters[i] = f;
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Board::addAircraftCarrier(const AircraftCarrier& a) {
-    for (int i = 0; i < NUM_AIRCRAFT_CARRIERS; i++) {
-        if (aircraftCarriers[i].getId() == -1) {
-            aircraftCarriers[i] = a;
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Board::moveFighter(int id, const Coordinate& newPosition) {
-    int idx = getFighterIndex(id);
-    if (idx == -1 || !newPosition.isValid()) return false;
-
-    fighters[idx].setPosition(newPosition);
-    return true;
-}
-
-bool Board::bomb(int fighterId) {
-    int fighterIdx = getFighterIndex(fighterId);
-    if (fighterIdx == -1) return false;
-
-    Coordinate pos = fighters[fighterIdx].getPosition();
-    int acIdx = getAircraftCarrierIndex(pos);
-    if (acIdx == -1 || aircraftCarriers[acIdx].isDamaged()) return false;
-
-    aircraftCarriers[acIdx].setDamaged(true);
-    fighters[fighterIdx].increaseScore();
-    return true;
-}
-
-void Board::printFighters() const {
-    for (int i = 0; i < NUM_FIGHTERS; i++) {
-        if (fighters[i].getId() != -1)
-            std::cout << fighters[i] << std::endl;
-    }
-}
-
-void Board::printAircraftCarriers() const {
-    for (int i = 0; i < NUM_AIRCRAFT_CARRIERS; i++) {
-        if (aircraftCarriers[i].getId() != -1)
-            std::cout << aircraftCarriers[i] << std::endl;
-    }
+    return result;
 }
