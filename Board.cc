@@ -10,19 +10,19 @@ Board::Board(int size) : size(size) {
 
 Fighter* Board::getFighter(Coordinate c) const {
     if (!inside(c)) return nullptr;
-    return board[c.getRow()][c.getCol()];
+    return board[c.getRow()][c.getColumn()];
 }
 
 bool Board::inside(Coordinate c) const {
-    return c.getRow() >= 0 && c.getRow() < size && c.getCol() >= 0 && c.getCol() < size;
+    return c.getRow() >= 0 && c.getRow() < size && c.getColumn() >= 0 && c.getColumn() < size;
 }
 
 int Board::launch(Coordinate c, Fighter* f) {
     if (!f || !inside(c) || f->getPosition().isValid()) return 0;
 
-    Fighter* current = board[c.getRow()][c.getCol()];
+    Fighter* current = board[c.getRow()][c.getColumn()];
     if (current == nullptr) {
-        board[c.getRow()][c.getCol()] = f;
+        board[c.getRow()][c.getColumn()] = f;
         f->setPosition(c);
         return 0;
     }
@@ -34,7 +34,7 @@ int Board::launch(Coordinate c, Fighter* f) {
     if (result == 1) {
         // f won, replace enemy
         current->resetPosition();
-        board[c.getRow()][c.getCol()] = f;
+        board[c.getRow()][c.getColumn()] = f;
         f->setPosition(c);
     } else if (result == -1) {
         // enemy won, f remains unplaced

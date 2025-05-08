@@ -1,6 +1,13 @@
 // Y5624889T ANJA RAPHAELA ALUM MILLARES
 #include "Fighter.h"
 #include <stdexcept>
+#include <cstdlib> // Para rand()
+
+// Devuelve un número aleatorio entre 0 y maxrnd-1
+int getRandomNumber(unsigned int maxrnd) {
+    return rand() % maxrnd;
+}
+
 
 int Fighter::nextId = 1;
 
@@ -14,6 +21,11 @@ Fighter::Fighter(std::string type, std::string aircraftCarrier)
 
 void Fighter::resetNextId() {
     nextId = 1;
+}
+
+
+void Fighter::setPosition(Coordinate p){
+    position = p;
 }
 
 void Fighter::resetPosition() {
@@ -34,7 +46,7 @@ int Fighter::fight(Fighter* enemy) {
     }
 
     while (!this->isDestroyed() && !enemy->isDestroyed()) {
-        int n = getRandomNumber();
+        int n = getRandomNumber(100);
         int v1 = this->speed;
         int v2 = enemy->speed;
         int u = (100 * v1) / (v1 + v2);

@@ -1,0 +1,37 @@
+Programación 2 - Autocorrector práctica 3
+=========================================
+
+Esta práctica no se va a probar usando diferentes datos de entrada y
+comparando las salidas, como en las prácticas anteriores. En esta práctica
+usaremos pruebas unitarias, que son ficheros con código que van a invocar
+los métodos de las clases de la práctica, comprobando que el comportamiento
+de cada método es el adecuado.
+
+En el directorio 'test' hay un fichero .h con las pruebas de cada clase de
+la práctica, si te falla alguna puedes ver el código de la prueba para
+averiguar qué está mal en tu código.
+
+
+Para pasar el autocorrector, hay que copiar todos los ficheros de la
+práctica (.cc y .h) en el directorio en el que esté el directorio 
+'autocorrector-prac3', abrir un terminal y entrar en 'autocorrector-prac3',
+y ejecutar:
+
+./autocorrectorP2p3.sh
+
+-----------------------------------------------------------
+AVISO IMPORTANTE SOBRE LAS PRUEBAS UNITARIAS: hay una prueba unitaria por
+cada clase, en la que se prueban todos los métodos públicos que se indican
+en el enunciado de la práctica. El código de las pruebas está en el
+directorio 'test' dentro de 'autocorrector-prac3'
+
+Si falta algún método del diagrama o no tiene exactamente los mismos
+parámetros, no será posible compilar las pruebas unitarias y por tanto 
+fallarán las pruebas unitarias (y la nota de la práctica será 0).
+
+Es posible ejecutar las pruebas unitarias de las clases de la práctica de
+forma incremental, aunque no hayas terminado todas las clases. Lo único que se 
+necesita es que existan todos los ficheros de la práctica, aunque no tengan 
+nada (dará error al compilar, pero ejecutará las pruebas unitarias que
+pueda)
+

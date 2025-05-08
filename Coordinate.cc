@@ -14,11 +14,11 @@ int Coordinate::getColumn() const {
 }
 
 void Coordinate::setRow(int r) {
-    this->row = row;
+    this->row = r;
 }
 
 void Coordinate::setColumn(int c) {
-    this->column = column;
+    this->column = c;
 }
 
 bool Coordinate::isValid() const {

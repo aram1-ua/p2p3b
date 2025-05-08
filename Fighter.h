@@ -24,6 +24,7 @@ public:
     Fighter(std::string type, std::string aircraftCarrier);
 
     static void resetNextId();
+    void setPosition(Coordinate p);
     void resetPosition();
     bool isDestroyed() const;
     int getDamage(int n) const;

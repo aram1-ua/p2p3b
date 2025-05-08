@@ -1,0 +1,69 @@
+all: testAC-Coordinate testAC-Fighter testAC-AircraftCarrier testAC-Board
+
+CORRDIR=autocorrector-prac3
+
+CXXTESTGEN=$(CORRDIR)/test/cxxtestgen.pl
+CXXTESTSUITEACCOORDINATE=$(CORRDIR)/test/p2TestSuiteAC-Coordinate.h
+CXXTESTSUITEACFIGHTER=$(CORRDIR)/test/p2TestSuiteAC-Fighter.h
+CXXTESTSUITEACAIRCRAFTCARRIER=$(CORRDIR)/test/p2TestSuiteAC-AircraftCarrier.h
+CXXTESTSUITEACBOARD=$(CORRDIR)/test/p2TestSuiteAC-Board.h
+
+OPTS=-Wall -g -std=c++11
+OBJS=Board.o AircraftCarrier.o Fighter.o Coordinate.o
+CC=g++
+
+Board.o: Board.cc Board.h AircraftCarrier.h Fighter.h
+	$(CC) $(OPTS) -c Board.cc
+
+AircraftCarrier.o: AircraftCarrier.cc AircraftCarrier.h Fighter.h
+	$(CC) $(OPTS) -c AircraftCarrier.cc
+
+Coordinate.o: Coordinate.cc Coordinate.h
+	$(CC) $(OPTS) -c Coordinate.cc
+
+Fighter.o: Fighter.cc Fighter.h
+	$(CC) $(OPTS) -c Fighter.cc
+
+
+#--------------------
+
+testAC-Coordinate: $(OBJS)
+	@echo
+	@echo "Compilando pruebas unitarias de Coordinate"
+	@rm -f $(CORRDIR)/p2TestRunnerAC-Coordinate
+	@env PERL_BADLANG=0 $(CXXTESTGEN) --error-printer -o $(CORRDIR)/p2TestRunnerAC-Coordinate.cc $(CXXTESTSUITEACCOORDINATE)
+	g++ -std=c++11 -g -I. -I$(CORRDIR)/test -o p2TestRunnerAC-Coordinate $(CORRDIR)/p2TestRunnerAC-Coordinate.cc $(OBJS)
+	@rm -f $(CORRDIR)/p2TestRunnerAC-Coordinate.cc
+	@mv p2TestRunnerAC-Coordinate $(CORRDIR)
+
+testAC-Fighter: $(OBJS)
+	@echo
+	@echo "Compilando pruebas unitarias de Fighter"
+	@rm -f $(CORRDIR)/p2TestRunnerAC-Fighter
+	@env PERL_BADLANG=0 $(CXXTESTGEN) --error-printer -o $(CORRDIR)/p2TestRunnerAC-Fighter.cc $(CXXTESTSUITEACFIGHTER)
+	g++ -std=c++11 -g -I. -I$(CORRDIR)/test -o p2TestRunnerAC-Fighter $(CORRDIR)/p2TestRunnerAC-Fighter.cc $(OBJS)
+	@rm -f $(CORRDIR)/p2TestRunnerAC-Fighter.cc
+	@mv p2TestRunnerAC-Fighter $(CORRDIR)
+
+testAC-AircraftCarrier: $(OBJS)
+	@echo
+	@echo "Compilando pruebas unitarias de AircraftCarrier"
+	@rm -f $(CORRDIR)/p2TestRunnerAC-AircraftCarrier
+	@env PERL_BADLANG=0 $(CXXTESTGEN) --error-printer -o $(CORRDIR)/p2TestRunnerAC-AircraftCarrier.cc $(CXXTESTSUITEACAIRCRAFTCARRIER)
+	g++ -std=c++11 -g -I. -I$(CORRDIR)/test -o p2TestRunnerAC-AircraftCarrier $(CORRDIR)/p2TestRunnerAC-AircraftCarrier.cc $(OBJS)
+	@rm -f $(CORRDIR)/p2TestRunnerAC-AircraftCarrier.cc
+	@mv p2TestRunnerAC-AircraftCarrier $(CORRDIR)
+
+testAC-Board: $(OBJS)
+	@echo
+	@echo "Compilando pruebas unitarias de Board"
+	@rm -f $(CORRDIR)/p2TestRunnerAC-Board
+	@env PERL_BADLANG=0 $(CXXTESTGEN) --error-printer -o $(CORRDIR)/p2TestRunnerAC-Board.cc $(CXXTESTSUITEACBOARD)
+	g++ -std=c++11 -g -I. -I$(CORRDIR)/test -o p2TestRunnerAC-Board $(CORRDIR)/p2TestRunnerAC-Board.cc $(OBJS)
+	@rm -f $(CORRDIR)/p2TestRunnerAC-Board.cc
+	@mv p2TestRunnerAC-Board $(CORRDIR)
+
+clean:
+	rm -f $(OBJS)
+	rm -f p2TestRunner*
+	rm -f mata
