@@ -16,6 +16,7 @@ public:
     Fighter* getFighter(Coordinate c) const;
     bool inside(Coordinate c) const;
     int launch(Coordinate c, Fighter* f);
+    int getSize() const;
 };
 
 #endif

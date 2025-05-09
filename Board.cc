@@ -17,6 +17,10 @@ bool Board::inside(Coordinate c) const {
     return c.getRow() >= 0 && c.getRow() < size && c.getColumn() >= 0 && c.getColumn() < size;
 }
 
+int Board::getSize() const{
+    return size;
+}
+
 int Board::launch(Coordinate c, Fighter* f) {
     if (!f || !inside(c) || f->getPosition().isValid()) return 0;
 
