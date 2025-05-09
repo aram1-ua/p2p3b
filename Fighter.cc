@@ -2,6 +2,7 @@
 #include "Fighter.h"
 #include <stdexcept>
 #include <cstdlib> // Para rand()
+using namespace std;
 
 // Devuelve un número aleatorio entre 0 y maxrnd-1
 int getRandomNumber(unsigned int maxrnd) {
