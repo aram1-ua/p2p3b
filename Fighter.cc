@@ -8,13 +8,12 @@ int getRandomNumber(unsigned int maxrnd) {
     return rand() % maxrnd;
 }
 
-
 int Fighter::nextId = 1;
 
-Fighter::Fighter(std::string type, std::string aircraftCarrier)
+Fighter::Fighter(string type, string aircraftCarrier)
     : type(type), aircraftCarrier(aircraftCarrier), speed(100), attack(80), shield(80), position() {
     if (type.empty()) {
-        throw std::invalid_argument("Wrong type");
+        throw invalid_argument("Wrong type");
     }
     id = nextId++;
 }
@@ -22,7 +21,6 @@ Fighter::Fighter(std::string type, std::string aircraftCarrier)
 void Fighter::resetNextId() {
     nextId = 1;
 }
-
 
 void Fighter::setPosition(Coordinate p){
     position = p;
@@ -58,17 +56,20 @@ int Fighter::fight(Fighter* enemy) {
         }
     }
 
-    if (this->isDestroyed()) return -1;
-    if (enemy->isDestroyed()) return 1;
+    if (this->isDestroyed()) {
+        return -1;
+    }
+    if (enemy->isDestroyed()) {
+        return 1;
+    }
     return 0;
 }
 
-// Getters
-std::string Fighter::getType() const {
+string Fighter::getType() const {
     return type;
 }
 
-std::string Fighter::getAircraftCarrier() const {
+string Fighter::getAircraftCarrier() const {
     return aircraftCarrier;
 }
 
@@ -92,23 +93,26 @@ Coordinate Fighter::getPosition() const {
     return position;
 }
 
-// Adders
+
 void Fighter::addAttack(int value) {
     attack += value;
-    if (attack < 0) attack = 0;
+    if (attack < 0) {
+        attack = 0;
+    }
 }
 
 void Fighter::addSpeed(int value) {
     speed += value;
-    if (speed < 0) speed = 0;
+    if (speed < 0) {
+        speed = 0;
+    }
 }
 
 void Fighter::addShield(int value) {
     shield += value;
 }
 
-// Output operator
-std::ostream& operator<<(std::ostream& os, const Fighter& f) {
+ostream& operator<<(ostream& os, const Fighter& f) {
     os << "(" << f.type << " " << f.id << " " << f.position
        << " {" << f.speed << "," << f.attack << "," << f.shield << "})";
     return os;

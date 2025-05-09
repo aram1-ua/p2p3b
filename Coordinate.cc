@@ -1,5 +1,6 @@
 // Y5624889T ANJA RAPHAELA ALUM MILLARES
 #include "Coordinate.h"
+using namespace std;
 
 Coordinate::Coordinate() : row(-1), column(-1) {}
 
@@ -30,7 +31,7 @@ void Coordinate::reset() {
     column = -1;
 }
 
-std::ostream& operator<<(std::ostream& os, const Coordinate& c) {
+ostream& operator<<(ostream& os, const Coordinate& c) {
     if (c.isValid()) {
         os << "[" << c.row << "," << c.column << "]";
     } else {
